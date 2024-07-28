@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Poppins:wght@500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+/* Ensure the Navbar has a defined height */
+.navbar {
+  height: 60px; /* Adjust based on your actual navbar height */
+  /* Add other styling for navbar */
+}
+
+/* Apply padding to the content area to avoid overlap */
+.content {
+  padding-top: 60px; /* Adjust this to match or exceed the height of the navbar */
+}
+/* Add to your CSS file */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* Adjust spacing between cards */
+  justify-content: center;
+}
