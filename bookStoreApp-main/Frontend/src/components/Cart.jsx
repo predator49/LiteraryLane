@@ -22,6 +22,10 @@ function Cart() {
     navigate("/checkout"); // Navigate to checkout screen
   };
 
+  const handleBack = () => {
+    navigate("/"); // Navigate to home page
+  };
+
   return (
     <div className="container mx-auto px-4 py-6 mt-16">
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-gray-100">Shopping Cart</h1>
@@ -74,7 +78,13 @@ function Cart() {
               </button>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Total: ${calculateTotal()}</h2>
             </div>
-            <div className="mt-6 flex justify-center">
+            <div className="mt-6 flex justify-between">
+              <button
+                onClick={handleBack}
+                className="bg-gray-500 dark:bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-600 dark:hover:bg-gray-500 transition duration-200"
+              >
+                Back
+              </button>
               <button
                 onClick={handlePlaceOrder}
                 className="bg-blue-500 dark:bg-blue-400 text-white px-4 py-2 rounded-md hover:bg-blue-600 dark:hover:bg-blue-500 transition duration-200"

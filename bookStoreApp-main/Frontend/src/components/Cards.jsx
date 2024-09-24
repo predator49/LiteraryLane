@@ -1,10 +1,10 @@
-// card.js
 // eslint-disable-next-line no-unused-vars
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { CartContext } from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import toast from "react-hot-toast";
 
 function Cards({ item, isWishlistView, onCardClick }) {
   const { addToCart } = useContext(CartContext);
@@ -13,14 +13,17 @@ function Cards({ item, isWishlistView, onCardClick }) {
   const handleBuyNow = (e) => {
     e.stopPropagation(); // Prevent triggering card click
     addToCart(item);
+    toast.success("Book is added to the cart!");
   };
 
   const handleWishlistClick = (e) => {
     e.stopPropagation(); // Prevent triggering card click
     if (isInWishlist(item.id)) {
       removeFromWishlist(item.id);
+      toast("Removed from wishlist");
     } else {
       addToWishlist(item);
+      toast.success("Added to wishlist");
     }
   };
 

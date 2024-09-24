@@ -2,7 +2,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaHeart, FaShoppingCart } from 'react-icons/fa'; // Import cart icon
+import { FaHeart, FaShoppingCart } from 'react-icons/fa';
 import Logout from './Logout';
 import Login from './Login';
 import { useAuth } from '../context/AuthProvider';
@@ -56,7 +56,7 @@ function Navbar() {
         setFilteredBooks([]);
         return;
       }
-      
+
       const filtered = allBooks.filter(book =>
         book.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -88,14 +88,15 @@ function Navbar() {
       <li><NavLink to="/course" activeClassName="active-link">Books</NavLink></li>
       <li><NavLink to="/aboutus" activeClassName="active-link">About Us</NavLink></li>
       <li><NavLink to="/bestseller" activeClassName="active-link">Best Seller</NavLink></li>
+      <li><NavLink to="/orders" activeClassName="active-link">Orders</NavLink></li> {/* Add Orders link here */}
       <li>
         <NavLink to="/cart" activeClassName="active-link">
           <FaShoppingCart className="text-xl" /> {/* Cart icon */}
         </NavLink>
       </li>
-      
     </>
   );
+
   return (
     <>
     

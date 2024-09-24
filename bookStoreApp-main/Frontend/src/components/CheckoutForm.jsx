@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-const API_KEY = 'bc5ead557ef5cbdd5ce71895'; // Your actual Exchangerate-API key
+const API_KEY = 'bc5ead557ef5cbdd5ce71895';
 const USD_TO_INR_API_URL = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`;
 
-function CheckoutForm({ onCheckout }) {
+function CheckoutForm({ onCheckout, cartItems }) {  // Added cartItems as a prop
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -37,15 +37,19 @@ function CheckoutForm({ onCheckout }) {
       currency: "INR",
       name: "Your Company Name",
       description: "Test Transaction",
-      handler: function (response) {
+      handler: async function (response) {
         console.log(response.razorpay_payment_id);
         alert("Payment Successful");
-        onCheckout(response); // Call onCheckout with the response
+
+        // Call onCheckout with the response and additional order data
+        await saveOrderDetails(response.razorpay_payment_id, amountInPaise);
+
+        onCheckout(response); // Notify parent component of successful checkout
       },
       prefill: {
         name: "om yadav",
-        email: "omyaduvanshi9@gmail.com", // Ensure this is a valid email
-        contact: +918318347920, // Ensure this is a valid phone number
+        email: "omyaduvanshi9@gmail.com",
+        contact: "+918318347920",
       },
       theme: {
         color: "#3399cc",
@@ -58,6 +62,22 @@ function CheckoutForm({ onCheckout }) {
       alert("Payment Failed: " + response.error.description);
     });
     rzp.open();
+  };
+
+  const saveOrderDetails = async (paymentId, amount) => {
+    try {
+      await axios.post('http://localhost:4002/save-order', {
+        name,
+        address,
+        phone,
+        items: cartItems, // Include cart items in the order
+        paymentId,
+        amount
+      });
+      console.log("Order saved successfully!");
+    } catch (error) {
+      console.error("Error saving order:", error);
+    }
   };
 
   return (
@@ -103,7 +123,8 @@ function CheckoutForm({ onCheckout }) {
 }
 
 CheckoutForm.propTypes = {
-  onCheckout: PropTypes.func.isRequired, // Mark onCheckout as required
+  onCheckout: PropTypes.func.isRequired,
+  cartItems: PropTypes.array.isRequired, // Add cartItems to propTypes
 };
 
 export default CheckoutForm;
